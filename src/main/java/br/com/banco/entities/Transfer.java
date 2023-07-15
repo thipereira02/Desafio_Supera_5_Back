@@ -6,6 +6,7 @@ import java.time.OffsetDateTime;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "transferencia")
 public class Transfer {
     
     @Id
@@ -26,7 +27,7 @@ public class Transfer {
     private String nomeOperadorTransacao;
 
     @ManyToOne
-    @JoinColumn(name = "id_conta_origem", nullable = false)
+    @JoinColumn(name = "conta_id", nullable = false)
     private Account conta;
 
     public Transfer(OffsetDateTime dataTransferencia, BigDecimal valor, String tipo, String nomeOperadorTransacao, Account conta) {
