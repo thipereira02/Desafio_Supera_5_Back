@@ -1,18 +1,17 @@
 package br.com.banco.entities;
 
-import java.util.UUID;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
 @Entity
-public class Transferencia {
+public class Transfer {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private UUID idTransferencia;
+    private Long idTransferencia;
 
     @Column(name = "data_transferencia", nullable = false)
     private LocalDateTime dataTransferencia;
@@ -28,9 +27,9 @@ public class Transferencia {
 
     @ManyToOne
     @JoinColumn(name = "id_conta_origem", nullable = false)
-    private Conta conta;
+    private Account conta;
 
-    public Transferencia(LocalDateTime dataTransferencia, BigDecimal valor, String tipo, String nomeOperadorTransacao, Conta conta) {
+    public Transfer(LocalDateTime dataTransferencia, BigDecimal valor, String tipo, String nomeOperadorTransacao, Account conta) {
         this.dataTransferencia = dataTransferencia;
         this.valor = valor;
         this.tipo = tipo;

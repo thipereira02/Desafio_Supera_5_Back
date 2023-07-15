@@ -2,25 +2,24 @@ package br.com.banco.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.UUID;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "conta")
 @Data
 @NoArgsConstructor
-public class Conta {
+public class Account {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_conta")
-    private UUID idConta;
+    private Long idConta;
 
     @Column(name = "nome_responsavel", nullable = false)
     private String nomeResponsável;
 
-    public Conta(String nomeResponsável) {
+    public Account(String nomeResponsável) {
         this.nomeResponsável = nomeResponsável;
     }
-    
+
 }
