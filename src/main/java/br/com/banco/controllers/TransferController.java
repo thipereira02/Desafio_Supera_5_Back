@@ -42,7 +42,7 @@ public class TransferController {
         @PathVariable("accountId") Integer accountId,
         @RequestParam("operatorName") String operatorName
     ) {
-        return transferService.getTransfersByOperatorName(operatorName);
+        return transferService.getTransfersByOperatorName(accountId, operatorName);
     }
 
     @GetMapping("/{accountId}/by-date-and-operator")

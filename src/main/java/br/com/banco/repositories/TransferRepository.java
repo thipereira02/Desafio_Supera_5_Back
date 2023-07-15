@@ -21,7 +21,11 @@ public interface TransferRepository extends JpaRepository<Transfer, Integer>{
         @Param("accountId") Integer accountId
     );
 
-    List<Transfer> findByNomeOperadorTransacao(String operatorName);
+    @Query("SELECT t FROM Transfer t WHERE t.conta.id = :accountId AND t.nomeOperadorTransacao = :operatorName")
+    List<Transfer> findByNomeOperadorTransacao(
+        @Param("accountId") Integer accountId,
+        @Param("operatorName") String operatorName
+    );
 
     @Query("SELECT t FROM Transfer t WHERE t.dataTransferencia >= :startDate AND t.dataTransferencia <= :endDate AND t.conta.id = :accountId AND t.nomeOperadorTransacao = :operatorName")
     List<Transfer> findByDateTransferenciaAndNomeOperadorTransacao(

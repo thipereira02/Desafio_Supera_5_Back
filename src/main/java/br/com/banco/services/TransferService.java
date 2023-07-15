@@ -25,8 +25,8 @@ public class TransferService {
         return transferRepository.findByDateTransferencia(startDate, endDate, accountId);
     }
 
-    public List<Transfer> getTransfersByOperatorName(String operatorName) {
-        return transferRepository.findByNomeOperadorTransacao(operatorName);
+    public List<Transfer> getTransfersByOperatorName(Integer accountId, String operatorName) {
+        return transferRepository.findByNomeOperadorTransacao(accountId, operatorName);
     }
 
     public List<Transfer> getTransfersByDateAndOperatorName(Integer accountId, OffsetDateTime startDate, OffsetDateTime endDate, String operatorName) {
