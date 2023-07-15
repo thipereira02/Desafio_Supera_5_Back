@@ -1,14 +1,9 @@
 package br.com.banco.entities;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "conta")
-@Data
-@NoArgsConstructor
 public class Account {
 
     @Id
@@ -20,6 +15,26 @@ public class Account {
     private String nomeResponsável;
 
     public Account(String nomeResponsável) {
+        this.nomeResponsável = nomeResponsável;
+    }
+
+    public Account() {
+
+    }
+
+    public Integer getIdConta() {
+        return idConta;
+    }
+
+    public void setIdConta(Integer idConta) {
+        this.idConta = idConta;
+    }
+
+    public String getNomeResponsável() {
+        return nomeResponsável;
+    }
+
+    public void setNomeResponsável(String nomeResponsável) {
         this.nomeResponsável = nomeResponsável;
     }
 
