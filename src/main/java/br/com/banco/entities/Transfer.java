@@ -1,7 +1,7 @@
 package br.com.banco.entities;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.*;
 
@@ -11,10 +11,10 @@ public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long idTransferencia;
+    private Integer idTransferencia;
 
     @Column(name = "data_transferencia", nullable = false)
-    private LocalDateTime dataTransferencia;
+    private OffsetDateTime dataTransferencia;
 
     @Column(nullable = false)
     private BigDecimal valor;
@@ -29,7 +29,7 @@ public class Transfer {
     @JoinColumn(name = "id_conta_origem", nullable = false)
     private Account conta;
 
-    public Transfer(LocalDateTime dataTransferencia, BigDecimal valor, String tipo, String nomeOperadorTransacao, Account conta) {
+    public Transfer(OffsetDateTime dataTransferencia, BigDecimal valor, String tipo, String nomeOperadorTransacao, Account conta) {
         this.dataTransferencia = dataTransferencia;
         this.valor = valor;
         this.tipo = tipo;
