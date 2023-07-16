@@ -1,7 +1,7 @@
 package br.com.banco.controllers;
 
 import br.com.banco.services.TransferService;
-import br.com.banco.entities.Transfer;
+import br.com.banco.dto.TransferDTO;
 
 import java.util.List;
 import java.time.OffsetDateTime;
@@ -24,14 +24,14 @@ public class TransferController {
     }
 
     @GetMapping("/{accountId}")
-    public List<Transfer> getTransfersByAccountId(
+    public List<TransferDTO> getTransfersByAccountId(
         @PathVariable("accountId") Integer accountId
     ) {
         return transferService.getTransfersByAccountId(accountId);
     }
 
     @GetMapping("/{accountId}/by-date")
-    public List<Transfer> getTransfersByDate(
+    public List<TransferDTO> getTransfersByDate(
         @PathVariable("accountId") Integer accountId,
         @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
         @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate
@@ -40,7 +40,7 @@ public class TransferController {
     }
 
     @GetMapping("/{accountId}/by-operator")
-    public List<Transfer> getTransfersByOperatorName(
+    public List<TransferDTO> getTransfersByOperatorName(
         @PathVariable("accountId") Integer accountId,
         @RequestParam("operatorName") String operatorName
     ) {
@@ -48,7 +48,7 @@ public class TransferController {
     }
 
     @GetMapping("/{accountId}/by-date-and-operator")
-    public List<Transfer> getTransfersByDateAndOperatorName(
+    public List<TransferDTO> getTransfersByDateAndOperatorName(
         @PathVariable("accountId") Integer accountId,
         @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
         @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate,

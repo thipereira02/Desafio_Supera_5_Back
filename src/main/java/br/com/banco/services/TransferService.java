@@ -1,5 +1,6 @@
 package br.com.banco.services;
 
+import br.com.banco.dto.TransferDTO;
 import br.com.banco.entities.Account;
 import br.com.banco.entities.Transfer;
 import br.com.banco.repositories.TransferRepository;
@@ -8,6 +9,7 @@ import br.com.banco.exceptions.AccountException;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -22,24 +24,49 @@ public class TransferService {
         this.transferRepository = transferRepository;
     }
 
-    public List<Transfer> getTransfersByAccountId(Integer accountId) {
+    private TransferDTO convertToDTO(Transfer transfer) {
+        return new TransferDTO(
+            transfer.getDataTransferencia(),
+            transfer.getValor(),
+            transfer.getTipo(),
+            transfer.getNomeOperadorTransacao()
+        );
+    }
+
+    public List<TransferDTO> getTransfersByAccountId(Integer accountId) {
         Account account = accountRepository.findByIdConta(accountId);
         if (account == null) {
             throw new AccountException.AccountNotFoundException("Conta não encontrada.");
         }
         
-        return transferRepository.findByContaId(accountId);
+        List<Transfer> transfers =  transferRepository.findByContaId(accountId);
+
+        return transfers.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
-    public List<Transfer> getTransfersByDate(OffsetDateTime startDate, OffsetDateTime endDate, Integer accountId) {
-        return transferRepository.findByDateTransferencia(startDate, endDate, accountId);
+    public List<TransferDTO> getTransfersByDate(OffsetDateTime startDate, OffsetDateTime endDate, Integer accountId) {
+        List<Transfer> transfers = transferRepository.findByDateTransferencia(startDate, endDate, accountId);
+        
+        return transfers.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
-    public List<Transfer> getTransfersByOperatorName(Integer accountId, String operatorName) {
-        return transferRepository.findByNomeOperadorTransacao(accountId, operatorName);
+    public List<TransferDTO> getTransfersByOperatorName(Integer accountId, String operatorName) {
+        List<Transfer> transfers = transferRepository.findByNomeOperadorTransacao(accountId, operatorName);
+        
+        return transfers.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
-    public List<Transfer> getTransfersByDateAndOperatorName(Integer accountId, OffsetDateTime startDate, OffsetDateTime endDate, String operatorName) {
-        return transferRepository.findByDateTransferenciaAndNomeOperadorTransacao(accountId, startDate, endDate, operatorName);
+    public List<TransferDTO> getTransfersByDateAndOperatorName(Integer accountId, OffsetDateTime startDate, OffsetDateTime endDate, String operatorName) {
+        List<Transfer> transfers = transferRepository.findByDateTransferenciaAndNomeOperadorTransacao(accountId, startDate, endDate, operatorName);
+        
+        return transfers.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 }
