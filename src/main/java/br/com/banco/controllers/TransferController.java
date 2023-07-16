@@ -24,7 +24,9 @@ public class TransferController {
     }
 
     @GetMapping("/{accountId}")
-    public List<Transfer> getTransfersByAccountId(@PathVariable("accountId") Integer accountId) {
+    public List<Transfer> getTransfersByAccountId(
+        @PathVariable("accountId") Integer accountId
+    ) {
         return transferService.getTransfersByAccountId(accountId);
     }
 
