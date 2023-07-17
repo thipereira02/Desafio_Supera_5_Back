@@ -1,11 +1,13 @@
 package br.com.banco.services;
 
 import br.com.banco.dto.TransferDTO;
+import br.com.banco.dto.TransferDTOList;
 import br.com.banco.entities.Account;
 import br.com.banco.entities.Transfer;
 import br.com.banco.repositories.TransferRepository;
 import br.com.banco.repositories.AccountRepository;
 import br.com.banco.exceptions.AccountException;
+import br.com.banco.utils.TransferUtils;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -33,7 +35,7 @@ public class TransferService {
         );
     }
 
-    public List<TransferDTO> getTransfersByAccountId(Integer accountId) {
+    public TransferDTOList getTransfersByAccountId(Integer accountId) {
         Account account = accountRepository.findByIdConta(accountId);
         if (account == null) {
             throw new AccountException.AccountNotFoundException("Conta não encontrada.");
@@ -41,9 +43,11 @@ public class TransferService {
         
         List<Transfer> transfers =  transferRepository.findByContaId(accountId);
 
-        return transfers.stream()
+        List<TransferDTO> transferDTOs = transfers.stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
+
+        return new TransferDTOList(transferDTOs, TransferUtils.calculateTotalBalance(transfers));
     }
 
     public List<TransferDTO> getTransfersByDate(OffsetDateTime startDate, OffsetDateTime endDate, Integer accountId) {

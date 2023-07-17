@@ -2,6 +2,7 @@ package br.com.banco.controllers;
 
 import br.com.banco.services.TransferService;
 import br.com.banco.dto.TransferDTO;
+import br.com.banco.dto.TransferDTOList;
 
 import java.util.List;
 import java.time.OffsetDateTime;
@@ -24,7 +25,7 @@ public class TransferController {
     }
 
     @GetMapping("/{accountId}")
-    public List<TransferDTO> getTransfersByAccountId(
+    public TransferDTOList getTransfersByAccountId(
         @PathVariable("accountId") Integer accountId
     ) {
         return transferService.getTransfersByAccountId(accountId);
