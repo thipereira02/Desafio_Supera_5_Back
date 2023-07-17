@@ -14,10 +14,10 @@ public interface TransferRepository extends JpaRepository<Transfer, Integer>{
     @Query("SELECT t FROM Transfer t WHERE t.conta.idConta = :accountId")
     List<Transfer> findByContaId(Integer accountId);
 
-    @Query("SELECT t FROM Transfer t WHERE t.dataTransferencia >= :startDate AND t.dataTransferencia <= :endDate AND t.conta.id = :accountId")
+    @Query("SELECT t FROM Transfer t WHERE t.dataTransferencia >= :startDate AND t.dataTransferencia <= :endDateAdjusted AND t.conta.id = :accountId")
     List<Transfer> findByDateTransferencia(
         @Param("startDate") OffsetDateTime startDate, 
-        @Param("endDate") OffsetDateTime endDate, 
+        @Param("endDateAdjusted") OffsetDateTime endDateAdjusted, 
         @Param("accountId") Integer accountId
     );
 
@@ -27,11 +27,11 @@ public interface TransferRepository extends JpaRepository<Transfer, Integer>{
         @Param("operatorName") String operatorName
     );
 
-    @Query("SELECT t FROM Transfer t WHERE t.dataTransferencia >= :startDate AND t.dataTransferencia <= :endDate AND t.conta.id = :accountId AND t.nomeOperadorTransacao = :operatorName")
+    @Query("SELECT t FROM Transfer t WHERE t.dataTransferencia >= :startDate AND t.dataTransferencia <= :endDateAdjusted AND t.conta.id = :accountId AND t.nomeOperadorTransacao = :operatorName")
     List<Transfer> findByDateTransferenciaAndNomeOperadorTransacao(
             @Param("accountId") Integer accountId,
             @Param("startDate") OffsetDateTime startDate, 
-            @Param("endDate") OffsetDateTime endDate, 
+            @Param("endDateAdjusted") OffsetDateTime endDateAdjusted, 
             @Param("operatorName") String operatorName
     );
 

@@ -12,6 +12,7 @@ import br.com.banco.utils.TransferUtils;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.LocalTime;
 
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,9 @@ public class TransferService {
     }
 
     public List<TransferDTO> getTransfersByDate(OffsetDateTime startDate, OffsetDateTime endDate, Integer accountId) {
-        List<Transfer> transfers = transferRepository.findByDateTransferencia(startDate, endDate, accountId);
+        OffsetDateTime endDateAdjusted = endDate.with(LocalTime.MAX);
+
+        List<Transfer> transfers = transferRepository.findByDateTransferencia(startDate, endDateAdjusted, accountId);
         
         return transfers.stream()
             .map(this::convertToDTO)
@@ -67,7 +70,9 @@ public class TransferService {
     }
 
     public List<TransferDTO> getTransfersByDateAndOperatorName(Integer accountId, OffsetDateTime startDate, OffsetDateTime endDate, String operatorName) {
-        List<Transfer> transfers = transferRepository.findByDateTransferenciaAndNomeOperadorTransacao(accountId, startDate, endDate, operatorName);
+        OffsetDateTime endDateAdjusted = endDate.with(LocalTime.MAX);
+
+        List<Transfer> transfers = transferRepository.findByDateTransferenciaAndNomeOperadorTransacao(accountId, startDate, endDateAdjusted, operatorName);
         
         return transfers.stream()
             .map(this::convertToDTO)
